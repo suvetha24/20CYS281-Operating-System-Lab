@@ -24,13 +24,13 @@ pthread_create(&thread_id, attr, myFunc, parameters);
 - myFunc - Function to be called once the thread is created
 - parameters - parameters to the function (myFunc) called or NULL 
 
-### Sample Example Program
+### Example Program 1 - Passing Single Parameter
 
 ```
 /*
 @Author: Ramaguru Radhakrishnan
 @Date: 21 - Dec - 2022
-@Description: Creation and Execution of a simple thread
+@Description: Creation and Execution of a simple thread using single parameter
 */
 
 #include <pthread.h>
@@ -72,6 +72,68 @@ int main () {
          exit(-1);
       }
       
+   }
+   
+   // Exit the thread
+   pthread_exit(NULL);
+}
+```
+
+### Example Program 2 - Passing Multiple Parameters
+
+```
+/*
+@Author: Ramaguru Radhakrishnan
+@Date: 21 - Dec - 2022
+@Description: Creation and Execution of a simple thread using multiple parameters
+*/
+
+#include <pthread.h>
+#include <stdlib.h>
+#include <stdio.h> 
+#include <unistd.h>
+
+// We should use structure to pass multiple arguments to a thread function
+struct funcargs {
+
+    int a;
+    int b;
+    
+};
+
+// addition will be called when the Thread is created in the main function 
+// which takes structure as an argument
+void *addition(void *args) {
+    
+   sleep(2);    
+   struct funcargs *vars = (struct funcargs *)args;    
+   printf("\n[THREAD] Hello, Addition of %d and %d is %d.", vars->a, vars->b, vars->a + vars->b);
+   pthread_exit(NULL);
+   
+}
+
+int main () {
+
+   // thread defintion
+   pthread_t threads;
+   
+   // parameter to be passed to the called function - funcargs
+   struct funcargs vars;
+   
+   vars.a = 10;
+   vars.b = 20; 
+   
+   int result;
+  
+   printf("\n[MAIN] Creating thread");
+
+   // Creating the threading and thus calling the function with parameter passed to it
+   result = pthread_create(&threads, NULL, addition, (void *)&vars);
+
+   if (result) {
+
+      printf("Error in creating thread, %d ", result);
+      exit(-1);
    }
    
    // Exit the thread
