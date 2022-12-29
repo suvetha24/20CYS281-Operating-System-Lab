@@ -17,4 +17,4 @@ This repository maintains the course contents and materials for **Operating Syst
 - **21 - Nov - 2022:** [Scheduling Algorithm]()
 - **01 - Dec - 2022:** [Scheduling Algorithm]()
 - **22 - Dec - 2022:** [Multithreading in C](Assets/MultiThreading)
-- **30 - Dec - 2022:** [Semaphore and Mutex](Assets/Semaphore)
+- **30 - Dec - 2022:** [Semaphore and Mutex](Assets/Mutex_Semaphore)
