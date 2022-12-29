@@ -30,25 +30,29 @@ Semaphore is a non-negative integer variable used to signal the threads. It used
 #include <stdio.h> 
 #include <unistd.h>
 
+// Mutex lock 
 pthread_mutex_t lock;
 
+// Counter is the shared resource variable accessed by all threads
 int counter;
 
 // printWelcomeMessage will be called when the Thread is created in the main function 
 // which takes string as an argument
 void *printWelcomeMessage(void *names) {
-    
+
+   // Thread acquiring the lock    
    pthread_mutex_lock(&lock);
    
    char *name = (char *)names; 
    
-   printf("\n[THREAD] Entering Critical Section %d", counter++);
+   printf("\n[THREAD] Entering Critical Section %d", ++counter);
    
    for(int i=0; i<400000000;i++);
    printf("\n[THREAD] Hello, Welcome %s.", name);
    
    printf("\n[THREAD] Exiting Critical Section %d", counter);
    
+   // Thread releasing the lock
    pthread_mutex_unlock(&lock);
    
 }
@@ -61,6 +65,7 @@ int main () {
    // parameter to be passed to the called function - printWelcomeMessage
    char names[10][15] = {"Amritha","Praveen","Ramaguru"};
    
+   // initializing the mutex 
    if (pthread_mutex_init(&lock, NULL) != 0)
     {
         printf("\n mutex init failed\n");
@@ -88,6 +93,7 @@ int main () {
    pthread_join(threads[1], NULL);
    pthread_join(threads[2], NULL);
    
+   // destroying the mutex 
    pthread_mutex_destroy(&lock);
 
 }
