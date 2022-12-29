@@ -79,6 +79,12 @@ int main () {
 }
 ```
 
+#### Output
+
+<p align="center">
+    <img src="images/output/MT/MT_SP.png" width="300">
+</p>
+
 ### Example Program 2 - Passing Multiple Parameters
 
 ```
@@ -140,6 +146,12 @@ int main () {
    pthread_exit(NULL);
 }
 ```
+
+#### Output
+
+<p align="center">
+    <img src="images/output/MT/MT_MP.png" width="400">
+</p>
 
 ### Function 
 
