@@ -16,9 +16,6 @@ Semaphore is a non-negative integer variable used to signal the threads. It used
 ### Example 1 - Mutex
 
 ```
-### Example Program 3 - Passing Single Parameter and Joining the Threads
-
-```
 /*
 @Author: Ramaguru Radhakrishnan
 @Date: 28 - Dec - 2022
