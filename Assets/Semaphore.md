@@ -11,5 +11,85 @@ shared/critical section of the program. A mutex can either be locked or unlocked
 
 ### Semaphore 
 
-Semaphore is a non-negative integer variable used to signal the threads. It used wait() and signal() operations are used for process synchronization. In simple words, 
-it is a **Signalling mechanism.**
+Semaphore is a non-negative integer variable used to signal the threads. It used wait() and signal() operations are used for process synchronization. In simple words, it is a **Signalling mechanism.**
+
+### Example 1 - Mutex
+
+```
+### Example Program 3 - Passing Single Parameter and Joining the Threads
+
+```
+/*
+@Author: Ramaguru Radhakrishnan
+@Date: 28 - Dec - 2022
+@Description: Mutex
+*/
+
+#include <pthread.h>
+#include <stdlib.h>
+#include <stdio.h> 
+#include <unistd.h>
+
+pthread_mutex_t lock;
+
+int counter;
+
+// printWelcomeMessage will be called when the Thread is created in the main function 
+// which takes string as an argument
+void *printWelcomeMessage(void *names) {
+    
+   pthread_mutex_lock(&lock);
+   
+   char *name = (char *)names; 
+   
+   printf("\n[THREAD] Entering Critical Section %d", counter++);
+   
+   for(int i=0; i<400000000;i++);
+   printf("\n[THREAD] Hello, Welcome %s.", name);
+   
+   printf("\n[THREAD] Exiting Critical Section %d", counter);
+   
+   pthread_mutex_unlock(&lock);
+   
+}
+
+int main () {
+
+   // thread defintion
+   pthread_t threads[3];
+   
+   // parameter to be passed to the called function - printWelcomeMessage
+   char names[10][15] = {"Amritha","Praveen","Ramaguru"};
+   
+   if (pthread_mutex_init(&lock, NULL) != 0)
+    {
+        printf("\n mutex init failed\n");
+        return 1;
+    }
+   
+   int result;
+   
+   for(int i = 0; i < 3; i++ ) {
+   
+      printf("\n[MAIN] Creating thread, %d", i);
+      
+      // Creating the threading and thus calling the function with parameter passed to it
+      result = pthread_create(&threads[i], NULL, printWelcomeMessage, (void *)names[i]);
+      
+      if (result) {
+      
+         printf("Error in creating thread, %d ", result);
+         exit(-1);
+      }
+      
+   }
+   
+   pthread_join(threads[0], NULL);
+   pthread_join(threads[1], NULL);
+   pthread_join(threads[2], NULL);
+   
+   pthread_mutex_destroy(&lock);
+
+}
+```
+
