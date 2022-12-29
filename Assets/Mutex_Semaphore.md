@@ -96,3 +96,8 @@ int main () {
 }
 ```
 
+#### Output
+
+<p align="center">
+    <img src="images/output/MT/Mutex.png" width="350">
+</p>
