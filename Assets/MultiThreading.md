@@ -52,7 +52,7 @@ void *printWelcomeMessage(void *names) {
 int main () {
 
    // thread defintion
-   pthread_t threads[5];
+   pthread_t threads[7];
    
    // parameter to be passed to the called function - printWelcomeMessage
    char names[10][15] = {"Amritha","Praveen","Saurabh","Sangeetha","Lakshmy","Srinivasan","Ramaguru"};
@@ -135,6 +135,79 @@ int main () {
       printf("Error in creating thread, %d ", result);
       exit(-1);
    }
+   
+   // Exit the thread
+   pthread_exit(NULL);
+}
+```
+
+### Function 
+
+```
+pthread_join(thread_id, retval);
+```
+
+- thread_id - thread id 
+- retval - NULL
+
+
+### Example Program 3 - Passing Single Parameter and Joining the Threads
+
+```
+/*
+@Author: Ramaguru Radhakrishnan
+@Date: 27 - Dec - 2022
+@Description: Creation and Execution of a simple thread using single parameter and joining 
+*/
+
+#include <pthread.h>
+#include <stdlib.h>
+#include <stdio.h> 
+#include <unistd.h>
+
+// printWelcomeMessage will be called when the Thread is created in the main function 
+// which takes string as an argument
+void *printWelcomeMessage(void *names) {
+    
+   sleep(2);    
+   char *name = (char *)names;    
+   printf("\n[THREAD] Hello, Welcome %s.", name);
+   pthread_exit(NULL);
+   
+}
+
+int main () {
+
+   // thread defintion
+   pthread_t threads[7];
+   
+   // parameter to be passed to the called function - printWelcomeMessage
+   char names[10][15] = {"Amritha","Praveen","Saurabh","Sangeetha","Lakshmy","Srinivasan","Ramaguru"};
+   
+   int result;
+   
+   for(int i = 0; i < 7; i++ ) {
+   
+      printf("\n[MAIN] Creating thread, %d", i);
+      
+      // Creating the threading and thus calling the function with parameter passed to it
+      result = pthread_create(&threads[i], NULL, printWelcomeMessage, (void *)names[i]);
+      
+      if (result) {
+      
+         printf("Error in creating thread, %d ", result);
+         exit(-1);
+      }
+      
+   }
+   
+   pthread_join(threads[0], NULL);
+   pthread_join(threads[1], NULL);
+   pthread_join(threads[2], NULL);
+   pthread_join(threads[3], NULL);
+   pthread_join(threads[4], NULL);
+   pthread_join(threads[5], NULL);
+   pthread_join(threads[6], NULL);
    
    // Exit the thread
    pthread_exit(NULL);
