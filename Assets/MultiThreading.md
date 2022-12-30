@@ -24,6 +24,42 @@ pthread_create(&thread_id, attr, myFunc, parameters);
 - myFunc - Function to be called once the thread is created
 - parameters - parameters to the function (myFunc) called or NULL 
 
+### Example 
+
+```
+/*
+@Author: Ramaguru Radhakrishnan
+@Date: 30 - Dec - 2022
+@Description: Creation and Execution of a simple thread using single parameter
+*/
+#include <pthread.h>
+#include <stdlib.h>
+#include <stdio.h> 
+#include <unistd.h>
+
+void *summaclassdemo(void *args) {
+    
+    printf("Welcome to the thread");
+    
+}
+
+int main() {
+    
+    pthread_t thread; // A thread ID is assigned
+    
+    printf("%ld\n", thread);
+    
+    // pthread_create(thread_id, thread_attribute/NULL,
+    // function,functon_params);
+    pthread_create(&thread, NULL, summaclassdemo, NULL);
+    
+    pthread_join(thread, NULL);
+    
+    //pthread_exit(NULL);
+    return 0; 
+}
+```
+
 ### Example Program 1 - Passing Single Parameter
 
 ```
